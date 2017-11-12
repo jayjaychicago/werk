@@ -1,0 +1,16 @@
+{
+  "name": "server",
+  "version": "0.0.0",
+  "description": "Server",
+  "main": "app.js",
+  "author": {
+    "name": "DannySmith"
+  },
+  "devDependencies": {
+    "@types/node": "^6.0.87"
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "socket.io": "^2.0.4"
+  }
+}

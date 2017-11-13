@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
+import { BreakRoomComponent } from './components/break-room/break-room.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BreakRoomComponent
   ],
   imports: [
     BrowserModule

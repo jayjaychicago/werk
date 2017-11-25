@@ -7,23 +7,43 @@ var SocketService = (function () {
         this.port = port;
     }
     SocketService.prototype.start = function () {
-        this.io = socketIo(this.server);
+        this._io = socketIo(this.server);
         this.createObservables();
     };
     SocketService.prototype.createObservables = function () {
         var _this = this;
         var self = this;
-        this.io.on('connect', function (socket) {
+        this._io.on('connect', function (socket) {
             console.log('Connected client on port %s.', self.port);
-            socket.on('message', function (m) {
-                console.log('[server](message): %s', JSON.stringify(m));
-                _this.io.emit('message', m);
-            });
+            _this._connected = true;
+            _this._connectedSubject.next(_this._connected);
             socket.on('disconnect', function () {
-                console.log('Client disconnected');
+                _this._connected = false;
+                _this._connectedSubject.next(_this._connected);
             });
         });
     };
+    Object.defineProperty(SocketService.prototype, "connectedObservable", {
+        get: function () {
+            return this._connectedSubject;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SocketService.prototype, "io", {
+        get: function () {
+            return this._io;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SocketService.prototype, "connected", {
+        get: function () {
+            return this._connected;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return SocketService;
 }());
 exports.SocketService = SocketService;

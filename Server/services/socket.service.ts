@@ -1,34 +1,50 @@
 ﻿import * as socketIo from "socket.io";
 import * as application from "./socket.service";
+import * as data from "./data.service";
+import { Subject, Observable } from "rxjs";
 
 export class SocketService {
 
-    private io: any;
+    private _io: any;
+    private _connectedSubject: Subject<boolean>;
+
+    private _connected: boolean
 
     constructor(private server, private port: number) {
 
     }
 
     public start(): void {
-        this.io = socketIo(this.server);
+        this._io = socketIo(this.server);
         this.createObservables();
     }
 
-    public createObservables() {
+    private createObservables() {
 
         const self = this;
 
-        this.io.on('connect', (socket: any) => {
+        this._io.on('connect', (socket: any) => {
             console.log('Connected client on port %s.', self.port);
 
-            socket.on('message', (m: string) => {
-                console.log('[server](message): %s', JSON.stringify(m));
-                this.io.emit('message', m);
-            });
-
+            this._connected = true;
+            this._connectedSubject.next(this._connected);
+            
             socket.on('disconnect', () => {
-                console.log('Client disconnected');
+                this._connected = false;
+                this._connectedSubject.next(this._connected);
             });
         });
+    }
+
+    public get connectedObservable(): Observable<boolean> {
+        return this._connectedSubject as Observable<boolean>;
+    }
+
+    public get io(): any {
+        return this._io;
+    }
+
+    public get connected(): boolean{
+        return this._connected;
     }
 }

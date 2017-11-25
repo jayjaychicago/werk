@@ -38,6 +38,7 @@
     <Folder Include="src\app\" />
     <Folder Include="src\app\components\" />
     <Folder Include="src\app\components\break-room\" />
+    <Folder Include="src\app\components\home\" />
     <Folder Include="src\app\models\" />
     <Folder Include="src\app\services\" />
     <Folder Include="src\assets\" />
@@ -50,6 +51,9 @@
     <TypeScriptCompile Include="src\app\app.component.ts" />
     <TypeScriptCompile Include="src\app\app.module.ts" />
     <TypeScriptCompile Include="src\app\components\break-room\break-room.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\components\home\home.component.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\app\services\socket.service.ts">
@@ -76,6 +80,12 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\app\components\break-room\break-room.component.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\app\components\home\home.component.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\app\components\home\home.component.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\assets\.gitkeep" />

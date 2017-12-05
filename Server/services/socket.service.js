@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var socketIo = require("socket.io");
+var rxjs_1 = require("rxjs");
 var SocketService = (function () {
     function SocketService(server, port) {
         this.server = server;
@@ -13,14 +14,20 @@ var SocketService = (function () {
     SocketService.prototype.createObservables = function () {
         var _this = this;
         var self = this;
-        this._io.on('connect', function (socket) {
+        this._connectedSubject = new rxjs_1.Subject();
+        this._disconnectedSubject = new rxjs_1.Subject();
+        this._io.on('connection', function (socket) {
             console.log('Connected client on port %s.', self.port);
-            _this._connected = true;
-            _this._connectedSubject.next(_this._connected);
+            _this._connectedSubject.next(socket);
             socket.on('disconnect', function () {
-                _this._connected = false;
-                _this._connectedSubject.next(_this._connected);
+                _this._disconnectedSubject.next(socket);
             });
+        });
+    };
+    SocketService.prototype.createUserObservables = function (socket) {
+        socket.on("getUsers", function (socket) {
+            console.log("getUsers called in SocketService on server");
+            //this.dataService.getUsers(socket);
         });
     };
     Object.defineProperty(SocketService.prototype, "connectedObservable", {
@@ -30,16 +37,16 @@ var SocketService = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(SocketService.prototype, "io", {
+    Object.defineProperty(SocketService.prototype, "disconnectedObservable", {
         get: function () {
-            return this._io;
+            return this._disconnectedSubject;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(SocketService.prototype, "connected", {
+    Object.defineProperty(SocketService.prototype, "io", {
         get: function () {
-            return this._connected;
+            return this._io;
         },
         enumerable: true,
         configurable: true

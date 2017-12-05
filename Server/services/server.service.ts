@@ -5,8 +5,9 @@ import { ApplicationService } from "./application.service";
 
 export class Server {
 
-    public static readonly PORT: number = 8080;
+    public static readonly PORT: number = 3000;
 
+    private io: any;
     public app: any;
     private server: any;
     
@@ -17,12 +18,14 @@ export class Server {
         this.createApp();
         this.config();
         this.createServer();
-        this.listen();
         this.createApplicationService();
+        this.listen();        
     }
 
     private createApp(): void {
         this.app = express();
+        this.app.use(express.static('static'));
+        this.app.use('/', express.static('static', {index: 'index.html'}));
     }
     
     private createServer(): void {
@@ -35,6 +38,7 @@ export class Server {
     }
 
     private createApplicationService() {
+        console.log("Creating ApplicationService on server");
         this.applicationService = new ApplicationService(this.server, Server.PORT);
         this.applicationService.start();
     }

@@ -6,9 +6,8 @@ import { Subject, Observable } from "rxjs";
 export class SocketService {
 
     private _io: any;
-    private _connectedSubject: Subject<boolean>;
-
-    private _connected: boolean
+    private _connectedSubject: Subject<any>;
+    private _disconnectedSubject: Subject<any>;
 
     constructor(private server, private port: number) {
 
@@ -23,28 +22,38 @@ export class SocketService {
 
         const self = this;
 
-        this._io.on('connect', (socket: any) => {
+        this._connectedSubject = new Subject<boolean>();
+        this._disconnectedSubject = new Subject<any>();
+
+        this._io.on('connection', (socket: any) => {
             console.log('Connected client on port %s.', self.port);
 
-            this._connected = true;
-            this._connectedSubject.next(this._connected);
+            this._connectedSubject.next(socket);
             
             socket.on('disconnect', () => {
-                this._connected = false;
-                this._connectedSubject.next(this._connected);
+                this._disconnectedSubject.next(socket);
             });
+
+            
         });
     }
 
-    public get connectedObservable(): Observable<boolean> {
-        return this._connectedSubject as Observable<boolean>;
+    public createUserObservables(socket: any) {
+        socket.on("getUsers", (socket) => {
+            console.log("getUsers called in SocketService on server");
+            //this.dataService.getUsers(socket);
+        });
+    }
+
+    public get connectedObservable(): Observable<any> {
+        return this._connectedSubject as Observable<any>;
+    }
+
+    public get disconnectedObservable(): Observable<any> {
+        return this._disconnectedSubject as Observable<any>;
     }
 
     public get io(): any {
         return this._io;
-    }
-
-    public get connected(): boolean{
-        return this._connected;
     }
 }

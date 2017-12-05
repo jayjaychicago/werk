@@ -5,10 +5,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { BreakRoomComponent } from './components/break-room/break-room.component';
+import { UserComponent } from './components/user/user.component';
+import { SocketService } from './services/socket.service';
 
 const appRoutes: Routes = [
   { path: 'break-room', component: BreakRoomComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'user', component: UserComponent },
   {
     path: '',
     redirectTo: '/home',
@@ -21,7 +24,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     HomeComponent,
-    BreakRoomComponent
+    BreakRoomComponent,
+    UserComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -30,7 +34,7 @@ const appRoutes: Routes = [
     ),
     BrowserModule
   ],
-  providers: [],
+  providers: [SocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

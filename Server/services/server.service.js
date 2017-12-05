@@ -8,11 +8,13 @@ var Server = (function () {
         this.createApp();
         this.config();
         this.createServer();
-        this.listen();
         this.createApplicationService();
+        this.listen();
     }
     Server.prototype.createApp = function () {
         this.app = express();
+        this.app.use(express.static('static'));
+        this.app.use('/', express.static('static', { index: 'index.html' }));
     };
     Server.prototype.createServer = function () {
         this.server = http.createServer(this.app);
@@ -22,6 +24,7 @@ var Server = (function () {
         this.port = Server.PORT;
     };
     Server.prototype.createApplicationService = function () {
+        console.log("Creating ApplicationService on server");
         this.applicationService = new application_service_1.ApplicationService(this.server, Server.PORT);
         this.applicationService.start();
     };
@@ -33,6 +36,6 @@ var Server = (function () {
     };
     return Server;
 }());
-Server.PORT = 8080;
+Server.PORT = 3000;
 exports.Server = Server;
 //# sourceMappingURL=server.service.js.map

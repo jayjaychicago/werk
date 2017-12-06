@@ -1,0 +1,41 @@
+<nav class="navbar">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      <li class="dropdown">
+        <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>-->
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="roomDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Rooms
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li *ngFor="let room of rooms"><a (click)="getFactions(room.Id)">{{room.RoomName}}</a></li>
+        </ul>
+      </li>
+
+      <li class="dropdown">
+        <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>-->
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="factionsDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Factions
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li *ngFor="let faction of factions"><a (click)="getUsers(faction.Id)">{{faction.FactionName}}</a></li>
+        </ul>
+      </li>
+
+      <li class="dropdown">
+        <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>-->
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="usersDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Users
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li *ngFor="let user of users"><a (click)="getUsers(faction.Id)">{{user.UserName}}</a></li>
+        </ul>
+      </li>
+      </ul>
+</div>
+</nav>
+
+  <!--<br />
+  <tree-root [nodes]="nodes"></tree-root>-->

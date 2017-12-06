@@ -39,13 +39,63 @@ var DataService = (function () {
             }
         });
     };
-    Object.defineProperty(DataService.prototype, "allUsersObservable", {
-        get: function () {
-            return this.allUserSubject;
-        },
-        enumerable: true,
-        configurable: true
-    });
+    DataService.prototype.getRooms = function (socket) {
+        var self = this;
+        this.pool.getConnection(function (err, connection) {
+            if (!err) {
+                connection.query("call get_rooms", function (err, rows, fields) {
+                    if (!err) {
+                        socket.emit("allRoomsAvailable", rows);
+                    }
+                    else {
+                        console.log("Error while performing Query. " + err);
+                    }
+                });
+                connection.release();
+            }
+            else {
+                console.log("Error while performing connection. " + err);
+            }
+        });
+    };
+    DataService.prototype.getFactions = function (socket, roomId) {
+        var self = this;
+        this.pool.getConnection(function (err, connection) {
+            if (!err) {
+                connection.query("call get_factions(" + roomId + ")", function (err, rows, fields) {
+                    if (!err) {
+                        socket.emit("allFactionsAvailable", rows);
+                    }
+                    else {
+                        console.log("Error while performing Query. " + err);
+                    }
+                });
+                connection.release();
+            }
+            else {
+                console.log("Error while performing connection. " + err);
+            }
+        });
+    };
+    DataService.prototype.getFactionUsers = function (socket, factionId) {
+        var self = this;
+        this.pool.getConnection(function (err, connection) {
+            if (!err) {
+                connection.query("call get_faction_users(" + factionId + ")", function (err, rows, fields) {
+                    if (!err) {
+                        socket.emit("factionUsersAvailable", rows);
+                    }
+                    else {
+                        console.log("Error while performing Query. " + err);
+                    }
+                });
+                connection.release();
+            }
+            else {
+                console.log("Error while performing connection. " + err);
+            }
+        });
+    };
     return DataService;
 }());
 exports.DataService = DataService;

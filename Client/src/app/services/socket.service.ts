@@ -1,4 +1,3 @@
-
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import { Observer } from "rxjs/Observer";
@@ -13,14 +12,12 @@ const SERVER_URL: string = "http://localhost:3000";
 export class SocketService {
 
   private socket;
-  private allUsersAvailableSubject: Subject<Array<any>>;
-
+  
   constructor() {
     this.start();
   }
 
   public start(): void {
-    this.allUsersAvailableSubject = new Subject<Array<any>>();
     console.log("connecting to socket in client");
     this.socket = socketIo(SERVER_URL);
   }
@@ -28,7 +25,30 @@ export class SocketService {
   public allUsersAvailable(): Observable<Array<any>> {
     return new Observable(observer => {
       this.socket.on("allUsersAvailable", data => {
-        var users = data;
+        observer.next(data);
+      });
+    });
+  }
+
+  public allRoomsAvailable(): Observable<Array<any>> {
+    return new Observable(observer => {
+      this.socket.on("allRoomsAvailable", data => {
+        observer.next(data);
+      });
+    });
+  }
+
+  public allFactionsAvailable(): Observable<Array<any>> {
+    return new Observable(observer => {
+      this.socket.on("allFactionsAvailable", data => {
+        observer.next(data);
+      });
+    });
+  }
+
+  public factionUsersAvailable(): Observable<Array<any>> {
+    return new Observable(observer => {
+      this.socket.on("factionUsersAvailable", data => {
         observer.next(data);
       });
     });
@@ -52,4 +72,21 @@ export class SocketService {
     console.log("Emiting getUsers in socket.service on Client");
     this.socket.emit("getUsers");
   }
+
+  public getRooms(): void {
+    console.log("Emiting getRooms in socket.service on Client");
+    this.socket.emit("getRooms");
+  }
+
+  public getFactions(roomId: number): void {
+    console.log("Emiting getFactions in socket.service on Client");
+    this.socket.emit("getFactions", roomId);
+  }
+
+  public getFactionUsers(factionId: number): void {
+    console.log("Emiting getFactionUsers in socket.service on Client");
+    this.socket.emit("getFactionUsers", factionId);
+  }
+
+
 }

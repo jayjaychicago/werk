@@ -33,8 +33,6 @@ export class SocketService {
             socket.on('disconnect', () => {
                 this._disconnectedSubject.next(socket);
             });
-
-            
         });
     }
 

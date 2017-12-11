@@ -1,2 +1,19 @@
-﻿body {
+.chatTable{
+  width: 100%;
+}
+.detailsRow{
+  height: 15%;
+  border-bottom-width: 1px;
+  border-color: black;
+}
+.detailsCell {
+  text-align: center;
+}
+.chatRow{
+  height: 85%;
+  border-bottom-width: 1px;
+  border-color: black;
+}
+.chatCell {
+
 }

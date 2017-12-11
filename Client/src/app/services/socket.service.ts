@@ -6,8 +6,8 @@ import { Subject } from "rxjs/Subject";
 import * as socketIo from "socket.io-client";
 import { Message } from "../models/message.model";
 
-const SERVER_URL: string = "http://localhost:3000";
-//const SERVER_URL: string = "http://www.squwak.com:3000";
+//const SERVER_URL: string = "http://localhost:3000";
+const SERVER_URL: string = "http://www.squwak.com:3000";
 
 
 
@@ -24,6 +24,26 @@ export class SocketService {
     console.log("connecting to socket in client");
     this.socket = socketIo(SERVER_URL);
   }
+
+  // Room test items
+
+  public joinRoom(room: string) {
+    this.socket.emit("joinRoom", room);
+  }
+
+  public roomMessageAvailable(): Observable<string> {
+    return new Observable(observer => {
+      this.socket.on("roomMessageAvailable", data => {
+        observer.next(data);
+      });
+    });
+  }
+
+  public sendMessage(room: string, message: string) {
+    this.socket.emit("sendRoomMessage", room, message);
+  }
+
+  // End room test items
 
   public allUsersAvailable(): Observable<Array<any>> {
     return new Observable(observer => {

@@ -1,0 +1,11 @@
+<table>
+  <tr>
+    <td><input id="roomInput" type="text" (change)="changeRoomText($event.target.value)" /></td>
+    <td><button id="roomInputButton" (click)="joinRoom()">Join Room</button></td>
+    <td><input id="messageInput" type="text" (change)="changeMessageText($event.target.value)" /></td>
+    <td><button id="messageInputButton" (click)="sendMessage()">Send Message</button></td>
+  </tr>
+  <tr *ngFor="let message of messages">
+    <td style="color: black;">{{message}}</td>
+  </tr>
+</table>

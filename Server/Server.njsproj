@@ -65,6 +65,9 @@
     <TypeScriptCompile Include="services\socket.service.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="services\test-room.service.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="services\user.service.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

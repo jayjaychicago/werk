@@ -4,6 +4,7 @@ import { DataService } from "./data.service";
 import { UserService } from "./user.service"; 
 import { RoomService } from "./room.service";
 import { FactionService } from "./faction.service";
+import { TestRoomService } from "./test-room.service";
 import * as rx from "rxjs";
 
 export class ApplicationService {
@@ -13,6 +14,7 @@ export class ApplicationService {
     private userService: UserService;
     private roomService: RoomService;
     private factionService: FactionService;
+    private testRoomService: TestRoomService;
     
     constructor(private server, private port: number) {
         
@@ -24,6 +26,13 @@ export class ApplicationService {
         this.createUserService();
         this.createRoomService();
         this.createFactionService();
+        this.createTestRoomService();
+    }
+
+    private createTestRoomService(): void {
+        console.log("Creating TestRoomService on server");
+        this.testRoomService = new TestRoomService(this.socketService);
+        //this.socketService.start();
     }
 
     private createSocketService(): void {

@@ -1,6 +1,7 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { FormsModule } from "@angular/forms";
 
 import { TreeModule } from "angular-tree-component";
 
@@ -11,11 +12,13 @@ import { UserComponent } from "./components/user/user.component";
 import { UserChatItemComponent } from "./components/user-chat-item/user-chat-item.component";
 import { SocketService } from "./services/socket.service";
 import { RoomTreeComponent } from "./components/room-tree/room-tree.component";
+import { RoomTestComponent } from "./components/room-test/room-test.component";
 
 const appRoutes: Routes = [
   { path: "break-room", component: BreakRoomComponent },
   { path: "home", component: HomeComponent },
   { path: "user", component: UserComponent },
+  { path: "room-test", component: RoomTestComponent },
   {
     path: "",
     redirectTo: "/home",
@@ -31,7 +34,8 @@ const appRoutes: Routes = [
     BreakRoomComponent,
     UserComponent,
     UserChatItemComponent,
-    RoomTreeComponent
+    RoomTreeComponent,
+    RoomTestComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -39,7 +43,8 @@ const appRoutes: Routes = [
       { enableTracing: true } // <-- debugging purposes only
     ),
     TreeModule,
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [SocketService],
   bootstrap: [AppComponent]

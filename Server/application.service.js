@@ -5,7 +5,6 @@ var data_service_1 = require("./data.service");
 var user_service_1 = require("./user.service");
 var room_service_1 = require("./room.service");
 var faction_service_1 = require("./faction.service");
-var test_room_service_1 = require("./test-room.service");
 var ApplicationService = (function () {
     function ApplicationService(server, port) {
         this.server = server;
@@ -17,12 +16,6 @@ var ApplicationService = (function () {
         this.createUserService();
         this.createRoomService();
         this.createFactionService();
-        this.createTestRoomService();
-    };
-    ApplicationService.prototype.createTestRoomService = function () {
-        console.log("Creating TestRoomService on server");
-        this.testRoomService = new test_room_service_1.TestRoomService(this.socketService);
-        //this.socketService.start();
     };
     ApplicationService.prototype.createSocketService = function () {
         console.log("Creating SocketService on server");

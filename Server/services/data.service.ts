@@ -30,10 +30,14 @@ export class DataService {
 
     public getUsers(socket: any): void {
         const self = this;
+        console.log("Calling getUsers on Server in data.service");
         this.pool.getConnection((err, connection) => {
+            console.log("Connection obtained from the pool on Server in data.service");
             if (!err) {
+                console.log("No error calling get_users() on MySQL");
                 connection.query("call get_users", function (err, rows, fields) {
                     if (!err) {
+                        console.log("Emitting allUsersAvailable on Server in data.service");
                         socket.emit("allUsersAvailable", rows);
                     }
                     else {
@@ -51,10 +55,14 @@ export class DataService {
 
     public getRooms(socket: any): void {
         const self = this;
+        console.log("Calling getRooms on Server in data.service");
         this.pool.getConnection((err, connection) => {
+            console.log("Connection obtained from the pool on Server in data.service");
             if (!err) {
+                console.log("No error calling get_rooms() on MySQL");
                 connection.query("call get_rooms", function (err, rows, fields) {
                     if (!err) {
+                        console.log("Emitting allRoomsAvailable on Server in data.service");
                         socket.emit("allRoomsAvailable", rows);
                     }
                     else {

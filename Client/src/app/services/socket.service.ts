@@ -6,8 +6,8 @@ import { Subject } from "rxjs/Subject";
 import * as socketIo from "socket.io-client";
 import { Message } from "../models/message.model";
 
-//const SERVER_URL: string = "http://localhost:3000";
-const SERVER_URL: string = "http://www.squwak.com:3000";
+const SERVER_URL: string = "http://localhost:3000";
+//const SERVER_URL: string = "http://www.squwak.com:3000";
 
 
 

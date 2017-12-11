@@ -20,6 +20,10 @@ export class RoomTreeComponent implements OnInit, OnDestroy {
   private allFactionsSubscription: Subscription;
   private factionUsersSubscription: Subscription;
 
+  private _selectedRoom: string;
+  private _selectedFaction: string;
+  private _selectedUser: string;
+
   /*nodes = [
     {
       id: 1,
@@ -52,6 +56,10 @@ export class RoomTreeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log("ngOnInit");
 
+    this._selectedRoom = "Room";
+    this._selectedFaction = "Faction";
+    this._selectedUser = "User";
+
     this._rooms = new Array<Room>();
 
     this.allRoomsSubscription = this.socketService.allRoomsAvailable().subscribe(data => {
@@ -81,15 +89,39 @@ export class RoomTreeComponent implements OnInit, OnDestroy {
       this.allFactionsSubscription.unsubscribe;
   }
 
-  public get_rooms(): void {
+  private roomSelected(room: Room): void {
+    this._selectedRoom = room.RoomName;
+    this._selectedFaction = "Faction";
+    this._selectedUser = "User";
+
+    this._factions = new Array<Faction>();
+    this._users = new Array<User>();
+    this.getFactions(room.Id);
+  }
+
+  private factionSelected(faction: Faction): void {
+    this._selectedFaction = faction.FactionName;
+    this._selectedUser = "User";
+    this._users = new Array<User>();
+    this.getUsers(faction.Id);
+  }
+
+  private userSelected(user: User): void {
+    this._selectedUser = user.UserName;
+  }
+
+  public getRooms(): void {
     this.socketService.getRooms();
   }
 
   public getFactions(roomId: number): void {
+    this._selectedFaction = "Faction";
+    this._selectedUser = "User";
     this.socketService.getFactions(roomId);
   }
 
   public getUsers(factionId: number): void {
+    this._selectedUser = "User";
     this.socketService.getFactionUsers(factionId);
   }
   
@@ -103,5 +135,17 @@ export class RoomTreeComponent implements OnInit, OnDestroy {
 
   public get users(): Array<User> {
     return this._users;
+  }
+
+  public get selectedRoom(): string {
+    return this._selectedRoom
+  }
+
+  public get selectedFaction(): string {
+    return this._selectedFaction
+  }
+
+  public get selectedUser(): string {
+    return this._selectedUser
   }
 }

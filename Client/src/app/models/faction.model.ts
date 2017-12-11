@@ -1,4 +1,4 @@
 export interface Faction {
-  Id: string;
-  FactionName: number;
+  Id: number;
+  FactionName: string;
 }

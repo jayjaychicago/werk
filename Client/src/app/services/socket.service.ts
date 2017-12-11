@@ -6,110 +6,57 @@ import { Subject } from "rxjs/Subject";
 import * as socketIo from "socket.io-client";
 import { Message } from "../models/message.model";
 
-//const SERVER_URL: string = "http://localhost:3000";
-const SERVER_URL: string = "http://www.squwak.com:3000";
-
-
+const SERVER_URL: string = "http://localhost:3000";
+//const SERVER_URL: string = "http://www.squwak.com:3000";
 
 @Injectable()
 export class SocketService {
 
-  private socket;
+  private _io;
   
   constructor() {
     this.start();
   }
 
   public start(): void {
-    console.log("connecting to socket in client");
-    this.socket = socketIo(SERVER_URL);
+    console.log("connecting to _io in client");
+    this._io = socketIo(SERVER_URL);
   }
 
   // Room test items
 
   public joinRoom(room: string) {
-    this.socket.emit("joinRoom", room);
+    this._io.emit("joinRoom", room);
   }
 
   public roomMessageAvailable(): Observable<string> {
     return new Observable(observer => {
-      this.socket.on("roomMessageAvailable", data => {
+      this._io.on("roomMessageAvailable", data => {
         observer.next(data);
       });
     });
   }
 
   public sendMessage(room: string, message: string) {
-    this.socket.emit("sendRoomMessage", room, message);
+    this._io.emit("sendRoomMessage", room, message);
   }
 
   // End room test items
-
-  public allUsersAvailable(): Observable<Array<any>> {
-    return new Observable(observer => {
-      this.socket.on("allUsersAvailable", data => {
-        observer.next(data);
-      });
-    });
-  }
-
-  public allRoomsAvailable(): Observable<Array<any>> {
-    return new Observable(observer => {
-      this.socket.on("allRoomsAvailable", data => {
-        observer.next(data);
-      });
-    });
-  }
-
-  public allFactionsAvailable(): Observable<Array<any>> {
-    return new Observable(observer => {
-      this.socket.on("allFactionsAvailable", data => {
-        observer.next(data);
-      });
-    });
-  }
-
-  public factionUsersAvailable(): Observable<Array<any>> {
-    return new Observable(observer => {
-      this.socket.on("factionUsersAvailable", data => {
-        observer.next(data);
-      });
-    });
-  }
-
+  
   public connect(): Observable<any> {
-
     return new Observable(observer => {
-      this.socket.on('connect', () => observer.next());
+      this._io.on('connect', () => observer.next());
     });
-
   }
   
   public disconnect(): Observable<any> {
     return new Observable(observer => {
-      this.socket.on('disconnect', () => observer.next());
+      this._io.on('disconnect', () => observer.next());
     });
   }
-
-  public getUsers(): void {
-    console.log("Emiting getUsers in socket.service on Client");
-    this.socket.emit("getUsers");
+  
+  public get io() {
+    return this._io;
   }
-
-  public getRooms(): void {
-    console.log("Emiting getRooms in socket.service on Client");
-    this.socket.emit("getRooms");
-  }
-
-  public getFactions(roomId: number): void {
-    console.log("Emiting getFactions in socket.service on Client");
-    this.socket.emit("getFactions", roomId);
-  }
-
-  public getFactionUsers(factionId: number): void {
-    console.log("Emiting getFactionUsers in socket.service on Client");
-    this.socket.emit("getFactionUsers", factionId);
-  }
-
 
 }

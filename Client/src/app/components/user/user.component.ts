@@ -4,6 +4,7 @@ import { User } from "../../models/user.model";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 import { SocketService } from '../../services/socket.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'user-component',
@@ -12,10 +13,11 @@ import { SocketService } from '../../services/socket.service';
 })
 export class UserComponent implements OnInit, OnDestroy {
 
-  private allUsersSubscription: Subscription;
+  private _allUsersSubscription: Subscription;
+  private _factionUsersAvailable: Subscription;
   public users: Array<User>;
 
-  constructor(private socketService: SocketService) {
+  constructor(private userService: UserService) {
         
   }
 
@@ -24,20 +26,27 @@ export class UserComponent implements OnInit, OnDestroy {
 
     this.users = new Array<User>();
 
-    this.allUsersSubscription = this.socketService.allUsersAvailable().subscribe(data => {
+    this._allUsersSubscription = this.userService.allUsersAvailable().subscribe(data => {
       console.log("All Users");
 
       this.users = data[0] as Array<User>
 
       alert(JSON.stringify(this.users));
     });
+
+    this._factionUsersAvailable = this.userService.factionUsersAvailable().subscribe(data => {
+
+    });
+
     console.log("Calling getUsers on client");
-    this.socketService.getUsers();
+    this.userService.getUsers();
   }
 
+  
+
   ngOnDestroy(): void {
-    if (this.allUsersSubscription && !this.allUsersSubscription.closed)
-      this.allUsersSubscription.unsubscribe;
+    if (this._allUsersSubscription && !this._allUsersSubscription.closed)
+      this._allUsersSubscription.unsubscribe;
   }
 
   /*public get users(): Array<User> {

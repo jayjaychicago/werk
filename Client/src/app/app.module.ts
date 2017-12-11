@@ -11,6 +11,9 @@ import { BreakRoomComponent } from "./components/break-room/break-room.component
 import { UserComponent } from "./components/user/user.component";
 import { UserChatItemComponent } from "./components/user-chat-item/user-chat-item.component";
 import { SocketService } from "./services/socket.service";
+import { RoomService } from "./services/room.service";
+import { FactionService } from "./services/faction.service";
+import { UserService } from "./services/user.service";
 import { RoomTreeComponent } from "./components/room-tree/room-tree.component";
 import { RoomTestComponent } from "./components/room-test/room-test.component";
 
@@ -46,7 +49,7 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule
   ],
-  providers: [SocketService],
+  providers: [SocketService, RoomService, FactionService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

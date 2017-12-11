@@ -8,8 +8,7 @@ export class UserService {
     constructor(private socketService: SocketService, private dataService: DataService) {
         this.createSocketObservers();
     }
-
-
+    
     private createSocketObservers(): void {
         console.log("Creating Socket Observers in UserService on server");
         

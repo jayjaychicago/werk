@@ -5,6 +5,9 @@ import { User } from "../../models/user.model";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 import { SocketService } from '../../services/socket.service';
+import { RoomService } from '../../services/room.service';
+import { FactionService } from '../../services/faction.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: "room-tree",
@@ -49,7 +52,10 @@ export class RoomTreeComponent implements OnInit, OnDestroy {
     }
   ];*/
   
-  constructor(private socketService: SocketService) {
+  constructor(
+    private roomService: RoomService,
+    private factionService: FactionService,
+    private userService: UserService) {
     
   }
 
@@ -62,23 +68,23 @@ export class RoomTreeComponent implements OnInit, OnDestroy {
 
     this._rooms = new Array<Room>();
 
-    this.allRoomsSubscription = this.socketService.allRoomsAvailable().subscribe(data => {
+    this.allRoomsSubscription = this.roomService.allRoomsAvailable().subscribe(data => {
       console.log("all rooms received");
       this._rooms = data[0] as Array<Room>;
     });
 
-    this.allFactionsSubscription = this.socketService.allFactionsAvailable().subscribe(data => {
+    this.allFactionsSubscription = this.factionService.allFactionsAvailable().subscribe(data => {
       console.log("all factions received");
       this._factions = data[0] as Array<Faction>;
     });
 
-    this.factionUsersSubscription = this.socketService.factionUsersAvailable().subscribe(data => {
+    this.factionUsersSubscription = this.userService.factionUsersAvailable().subscribe(data => {
       console.log("all users received");
       this._users = data[0] as Array<User>;
     });
 
     console.log("Calling getRooms on client");
-    this.socketService.getRooms();
+    this.roomService.getRooms();
   }
 
   ngOnDestroy(): void {
@@ -111,18 +117,18 @@ export class RoomTreeComponent implements OnInit, OnDestroy {
   }
 
   public getRooms(): void {
-    this.socketService.getRooms();
+    this.roomService.getRooms();
   }
 
   public getFactions(roomId: number): void {
     this._selectedFaction = "Faction";
     this._selectedUser = "User";
-    this.socketService.getFactions(roomId);
+    this.factionService.getFactions(roomId);
   }
 
   public getUsers(factionId: number): void {
     this._selectedUser = "User";
-    this.socketService.getFactionUsers(factionId);
+    this.userService.getFactionUsers(factionId);
   }
   
   public get rooms(): Array<Room> {

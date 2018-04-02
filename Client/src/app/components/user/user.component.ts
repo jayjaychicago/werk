@@ -17,7 +17,7 @@ export class UserComponent implements OnInit, OnDestroy {
   private _factionUsersAvailable: Subscription;
   public users: Array<User>;
 
-  constructor(private userService: UserService) {
+  constructor(private _userService: UserService) {
         
   }
 
@@ -26,7 +26,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
     this.users = new Array<User>();
 
-    this._allUsersSubscription = this.userService.allUsersAvailable().subscribe(data => {
+    this._allUsersSubscription = this._userService.allUsersAvailable().subscribe(data => {
       console.log("All Users");
 
       this.users = data[0] as Array<User>
@@ -34,15 +34,13 @@ export class UserComponent implements OnInit, OnDestroy {
       alert(JSON.stringify(this.users));
     });
 
-    this._factionUsersAvailable = this.userService.factionUsersAvailable().subscribe(data => {
+    this._factionUsersAvailable = this._userService.factionUsersAvailable().subscribe(data => {
 
     });
 
     console.log("Calling getUsers on client");
-    this.userService.getUsers();
+    this._userService.getUsers();
   }
-
-  
 
   ngOnDestroy(): void {
     if (this._allUsersSubscription && !this._allUsersSubscription.closed)

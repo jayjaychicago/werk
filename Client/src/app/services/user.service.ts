@@ -23,6 +23,14 @@ export class UserService {
     });
   }
 
+  public allCompanyUsersAvailable(): Observable<Array<any>> {
+    return new Observable(observer => {
+      this._io.on("allCompanyUsersAvailable", data => {
+        observer.next(data);
+      });
+    });
+  }
+
   public factionUsersAvailable(): Observable<Array<any>> {
     return new Observable(observer => {
       this._io.on("factionUsersAvailable", data => {
@@ -34,6 +42,11 @@ export class UserService {
   public getUsers(): void {
     console.log("Emiting getUsers in socket.service on Client");
     this._io.emit("getUsers");
+  }
+
+  public getCompanyUsers(): void {
+    console.log("Emiting getCompanyUsers in socket.service on Client");
+    this._io.emit("getCompanyUsers");
   }
 
   public getFactionUsers(factionId: number): void {

@@ -39,6 +39,7 @@
     <Folder Include="src\app\components\" />
     <Folder Include="src\app\components\break-room\" />
     <Folder Include="src\app\components\home\" />
+    <Folder Include="src\app\components\company-user-item\" />
     <Folder Include="src\app\components\room-test\" />
     <Folder Include="src\app\components\user-chat-item\" />
     <Folder Include="src\app\components\user\" />
@@ -57,6 +58,9 @@
     <TypeScriptCompile Include="src\app\components\break-room\break-room.component.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\components\company-user-item\company-user-item.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\app\components\home\home.component.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -67,6 +71,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\app\components\user\user.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\models\CompanyUserItem.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\app\models\faction.model.ts">
@@ -126,6 +133,12 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\app\components\break-room\break-room.component.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\app\components\company-user-item\company-user-item.component.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\app\components\company-user-item\company-user-item.component.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\app\components\home\home.component.css">

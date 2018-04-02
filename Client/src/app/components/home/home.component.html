@@ -1,4 +1,24 @@
 <div class="main-title"><h1>Welcome to Werk!</h1></div>
 
 <br />
-<a href="#"><img src="/assets/avatars/DannySmith.jpg" /></a>
+
+<div class="container pt-4 pb-5">
+  <div class="row" *ngFor="let user of companyUserItems">
+    <div class="column">
+      <div class="card">
+        <img class="img-fluid" src="{{user.UserAvatar}}" alt="{{user.UserName}}" style="width:100%">
+
+        <div class="card-body">
+          <!--Company Name-->
+          <p><button class="button">{{user.CompanyName}}</button></p>
+
+          <!--Text-->
+          <p class=" card-text text-center"><a href=".">{{user.CompanyMissionStatement}}</a></p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+

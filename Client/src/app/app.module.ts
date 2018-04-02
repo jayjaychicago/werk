@@ -14,6 +14,7 @@ import { SocketService } from "./services/socket.service";
 import { RoomService } from "./services/room.service";
 import { FactionService } from "./services/faction.service";
 import { UserService } from "./services/user.service";
+import { CompanyUserItemComponent } from "./components/company-user-item/company-user-item.component";
 import { RoomTreeComponent } from "./components/room-tree/room-tree.component";
 import { RoomTestComponent } from "./components/room-test/room-test.component";
 

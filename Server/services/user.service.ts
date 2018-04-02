@@ -22,6 +22,11 @@ export class UserService {
                 console.log("getFactionUsers called in UserService on server");
                 this.dataService.getFactionUsers(socket, factionId);
             });
+
+            socket.on("getCompanyUsers", (factionId) => {
+                console.log("getCompanyUsers called in UserService on server");
+                this.dataService.getCompanyUsers(socket);
+            });
         });
 
         

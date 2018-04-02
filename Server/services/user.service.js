@@ -18,6 +18,10 @@ var UserService = (function () {
                 console.log("getFactionUsers called in UserService on server");
                 _this.dataService.getFactionUsers(socket, factionId);
             });
+            socket.on("getCompanyUsers", function (factionId) {
+                console.log("getCompanyUsers called in UserService on server");
+                _this.dataService.getCompanyUsers(socket);
+            });
         });
     };
     return UserService;

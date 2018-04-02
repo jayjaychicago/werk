@@ -28,6 +28,31 @@ export class DataService {
         });
     }
 
+    public getCompanyUsers(socket: any): void {
+        const self = this;
+        console.log("Calling getCompanyUsers on Server in data.service");
+        this.pool.getConnection((err, connection) => {
+            console.log("Connection obtained from the pool on Server in data.service");
+            if (!err) {
+                console.log("No error calling get_company_users() on MySQL");
+                connection.query("call get_company_users", function (err, rows, fields) {
+                    if (!err) {
+                        console.log("Emitting allCompanyUsersAvailable on Server in data.service");
+                        socket.emit("allCompanyUsersAvailable", rows);
+                    }
+                    else {
+                        console.log("Error while performing Query. " + err);
+                    }
+                });
+
+                connection.release();
+            }
+            else {
+                console.log("Error while performing connection. " + err);
+            }
+        });
+    }
+
     public getUsers(socket: any): void {
         const self = this;
         console.log("Calling getUsers on Server in data.service");

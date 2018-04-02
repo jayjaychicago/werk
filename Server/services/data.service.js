@@ -20,6 +20,29 @@ var DataService = (function () {
             database: "werk"
         });
     };
+    DataService.prototype.getCompanyUsers = function (socket) {
+        var self = this;
+        console.log("Calling getCompanyUsers on Server in data.service");
+        this.pool.getConnection(function (err, connection) {
+            console.log("Connection obtained from the pool on Server in data.service");
+            if (!err) {
+                console.log("No error calling get_company_users() on MySQL");
+                connection.query("call get_company_users", function (err, rows, fields) {
+                    if (!err) {
+                        console.log("Emitting allCompanyUsersAvailable on Server in data.service");
+                        socket.emit("allCompanyUsersAvailable", rows);
+                    }
+                    else {
+                        console.log("Error while performing Query. " + err);
+                    }
+                });
+                connection.release();
+            }
+            else {
+                console.log("Error while performing connection. " + err);
+            }
+        });
+    };
     DataService.prototype.getUsers = function (socket) {
         var self = this;
         console.log("Calling getUsers on Server in data.service");

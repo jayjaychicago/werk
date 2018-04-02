@@ -162,11 +162,11 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_15__components_room_test_room_test_component__["a" /* RoomTestComponent */]
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* RouterModule */].forRoot(appRoutes, { enableTracing: true } // <-- debugging purposes only
-                ),
-                __WEBPACK_IMPORTED_MODULE_4_angular_tree_component__["a" /* TreeModule */],
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
-                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormsModule */]
+                __WEBPACK_IMPORTED_MODULE_4_angular_tree_component__["a" /* TreeModule */],
+                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormsModule */],
+                __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* RouterModule */].forRoot(appRoutes, { enableTracing: true } // <-- debugging purposes only
+                )
             ],
             providers: [__WEBPACK_IMPORTED_MODULE_10__services_socket_service__["a" /* SocketService */], __WEBPACK_IMPORTED_MODULE_11__services_room_service__["a" /* RoomService */], __WEBPACK_IMPORTED_MODULE_12__services_faction_service__["a" /* FactionService */], __WEBPACK_IMPORTED_MODULE_13__services_user_service__["a" /* UserService */]],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_5__app_component__["a" /* AppComponent */]]
@@ -263,7 +263,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"main-title\"><h1>Welcome to Werk!</h1></div>\r\n\r\n<br />\r\n<a href=\"#\"><img src=\"/assets/avatars/DannySmith.jpg\" /></a>\r\n"
+module.exports = "<div class=\"main-title\"><h1>Welcome to Werk!</h1></div>\r\n\r\n<br />\r\n\r\n<div class=\"container pt-4 pb-5\">\r\n  <div class=\"row\" *ngFor=\"let user of companyUserItems\">\r\n    <div class=\"column\">\r\n      <div class=\"card\">\r\n        <img class=\"img-fluid\" src=\"{{user.UserAvatar}}\" alt=\"{{user.UserName}}\" style=\"width:100%\">\r\n\r\n        <div class=\"card-body\">\r\n          <!--Company Name-->\r\n          <p><button class=\"button\">{{user.CompanyName}}</button></p>\r\n\r\n          <!--Text-->\r\n          <p class=\" card-text text-center\"><a href=\".\">{{user.CompanyMissionStatement}}</a></p>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -273,6 +273,7 @@ module.exports = "<div class=\"main-title\"><h1>Welcome to Werk!</h1></div>\r\n\
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomeComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_user_service__ = __webpack_require__("../../../../../src/app/services/user.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -283,16 +284,40 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var HomeComponent = (function () {
-    function HomeComponent() {
+    function HomeComponent(_userService) {
+        this._userService = _userService;
+        this._companyUserItems = new Array();
     }
+    HomeComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        console.log("ngOnInit");
+        this._companyUserItems = new Array();
+        this._companyUsersSubscription = this._userService.allCompanyUsersAvailable().subscribe(function (data) {
+            _this._companyUserItems = data[0];
+        });
+        console.log("Calling getCompanyUsers on client");
+        this._userService.getCompanyUsers();
+    };
+    HomeComponent.prototype.ngOnDestroy = function () {
+        if (this._companyUsersSubscription && !this._companyUsersSubscription.closed)
+            this._companyUsersSubscription.unsubscribe;
+    };
+    Object.defineProperty(HomeComponent.prototype, "companyUserItems", {
+        get: function () {
+            return this._companyUserItems;
+        },
+        enumerable: true,
+        configurable: true
+    });
     HomeComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'home',
             template: __webpack_require__("../../../../../src/app/components/home/home.component.html"),
             styles: [__webpack_require__("../../../../../src/app/components/home/home.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */]])
     ], HomeComponent);
     return HomeComponent;
 }());
@@ -708,22 +733,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var UserComponent = (function () {
-    function UserComponent(userService) {
-        this.userService = userService;
+    function UserComponent(_userService) {
+        this._userService = _userService;
     }
     UserComponent.prototype.ngOnInit = function () {
         var _this = this;
         console.log("ngOnInit");
         this.users = new Array();
-        this._allUsersSubscription = this.userService.allUsersAvailable().subscribe(function (data) {
+        this._allUsersSubscription = this._userService.allUsersAvailable().subscribe(function (data) {
             console.log("All Users");
             _this.users = data[0];
             alert(JSON.stringify(_this.users));
         });
-        this._factionUsersAvailable = this.userService.factionUsersAvailable().subscribe(function (data) {
+        this._factionUsersAvailable = this._userService.factionUsersAvailable().subscribe(function (data) {
         });
         console.log("Calling getUsers on client");
-        this.userService.getUsers();
+        this._userService.getUsers();
     };
     UserComponent.prototype.ngOnDestroy = function () {
         if (this._allUsersSubscription && !this._allUsersSubscription.closed)
@@ -950,6 +975,14 @@ var UserService = (function () {
             });
         });
     };
+    UserService.prototype.allCompanyUsersAvailable = function () {
+        var _this = this;
+        return new __WEBPACK_IMPORTED_MODULE_1_rxjs_Observable__["a" /* Observable */](function (observer) {
+            _this._io.on("allCompanyUsersAvailable", function (data) {
+                observer.next(data);
+            });
+        });
+    };
     UserService.prototype.factionUsersAvailable = function () {
         var _this = this;
         return new __WEBPACK_IMPORTED_MODULE_1_rxjs_Observable__["a" /* Observable */](function (observer) {
@@ -961,6 +994,10 @@ var UserService = (function () {
     UserService.prototype.getUsers = function () {
         console.log("Emiting getUsers in socket.service on Client");
         this._io.emit("getUsers");
+    };
+    UserService.prototype.getCompanyUsers = function () {
+        console.log("Emiting getCompanyUsers in socket.service on Client");
+        this._io.emit("getCompanyUsers");
     };
     UserService.prototype.getFactionUsers = function (factionId) {
         this._io.emit("getFactionUsers", factionId);

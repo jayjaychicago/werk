@@ -25,7 +25,7 @@ export class Server {
     private createApp(): void {
         this.app = express();
         this.app.use(express.static('static'));
-        this.app.use('/', express.static('static', {index: 'index.html'}));
+        this.app.use('/', express.static('static', { index: 'index.html' }));
     }
     
     private createServer(): void {

@@ -41,13 +41,13 @@ const appRoutes: Routes = [
     RoomTestComponent
   ],
   imports: [
+    BrowserModule,
+    TreeModule,
+    FormsModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
-    ),
-    TreeModule,
-    BrowserModule,
-    FormsModule
+    )    
   ],
   providers: [SocketService, RoomService, FactionService, UserService],
   bootstrap: [AppComponent]

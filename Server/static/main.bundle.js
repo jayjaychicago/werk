@@ -263,7 +263,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"main-title\"><h1>Welcome to Werk!</h1></div>\r\n\r\n<br />\r\n\r\n<div class=\"container pt-4 pb-5\">\r\n  <div class=\"row\" *ngFor=\"let user of companyUserItems\">\r\n    <div class=\"column\">\r\n      <div class=\"card\">\r\n        <img class=\"img-fluid\" src=\"{{user.UserAvatar}}\" alt=\"{{user.UserName}}\" style=\"width:100%\">\r\n\r\n        <div class=\"card-body\">\r\n          <!--Company Name-->\r\n          <p><button class=\"button\">{{user.CompanyName}}</button></p>\r\n\r\n          <!--Text-->\r\n          <p class=\" card-text text-center\"><a href=\".\">{{user.CompanyMissionStatement}}</a></p>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n\r\n"
+module.exports = "\r\n\r\n<!--<div class=\"container pt-4 pb-5\">\r\n  <div class=\"row\">\r\n    <div class=\"column\" *ngFor=\"let user of companyUserItems\">\r\n      <div class=\"card\">\r\n        <img class=\"img-fluid\" src=\"{{user.UserAvatar}}\" alt=\"{{user.UserName}}\" style=\"width:100%\">\r\n\r\n        <div class=\"card-body\">-->\r\n          <!--Company Name-->\r\n          <!--<p><button class=\"button\">{{user.CompanyName}}</button></p>-->\r\n\r\n          <!--Text-->\r\n          <!--<p class=\" card-text text-center\"><a href=\".\">{{user.CompanyMissionStatement}}</a></p>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>-->\r\n\r\n<div class=\"container pt-4 pb-5\">\r\n  <div class=\"row\">\r\n    <div class=\"column\" *ngFor=\"let user of companyUserItems\" width=\"10%\">\r\n\r\n      <!--Card-->\r\n      <div class=\"card\" style=\"width: 10%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);\">\r\n\r\n        <!--Card image-->\r\n        <div class=\"view overlay hm-white-slight waves-light\" mdbRippleRadius>\r\n          <img src=\"{{user.Avatar}}\" alt=\"{{user.UserName}}\" style=\"width: 100%\" class=\"card-img-top\">\r\n          <p class=\"text-center\"><button class=\"button\" style=\"width: 100%\">{{user.CompanyName}}</button></p>\r\n        </div>\r\n        <!--/.Card image-->\r\n        <!--Card content-->\r\n        <div class=\"card-body\">\r\n          <!--Title-->\r\n          <p class=\"text-center\" style=\"width: 100%\"><a href=\".\">{{user.CompanyMissionStatement}}</a></p>\r\n\r\n        </div>\r\n        <!--/.Card content-->\r\n\r\n      </div>\r\n      <!--/.Card-->\r\n\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -315,7 +315,8 @@ var HomeComponent = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'home',
             template: __webpack_require__("../../../../../src/app/components/home/home.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/components/home/home.component.css")]
+            styles: [__webpack_require__("../../../../../src/app/components/home/home.component.css")],
+            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* ViewEncapsulation */].None
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */]])
     ], HomeComponent);

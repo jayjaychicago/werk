@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ViewEncapsulation, Component, OnInit, OnDestroy } from '@angular/core';
 import { CompanyUserItem } from "../../models/CompanyUserItem";
 import { UserService } from '../../services/user.service';
 import { Observable } from "rxjs/Observable";
@@ -8,7 +8,8 @@ import { SocketService } from '../../services/socket.service';
 @Component({
   selector: 'home',
   templateUrl: "./home.component.html",
-  styleUrls: ["./home.component.css"]
+  styleUrls: ["./home.component.css"],
+  encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent {
 
